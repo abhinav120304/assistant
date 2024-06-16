@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voice-Controlled Flask App</title>
+    
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: black;
+        }
+        
+        .container {
+            text-align: center;
+        }
+        
+        h1 {
+            margin-bottom: 30px;
+            margin-right: 10px;
+            color: white;
+        }
+        
+        #textInput {
+            padding: 10px;
+            font-size: 16px;
+            width: 300px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .info {
+            background-color: #333;
+            color: white;
+            padding: 10px;
+            margin-top: 20px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Text-Controlled</h1>
+        <input type="text" id="textInput" placeholder="Enter your command">
+        <div class="info">
+            <h2>Commands to be used:</h2>
+            <ul style="list-style-type: none; padding: 0;">
+                <li> 
+                    <ul style="list-style-type: none; padding: 0;">
+                        <li>open YouTube</li>
+                        <li>open Instagram</li>
+                        <li>open Google</li>
+                        <li>open Spotify</li>
+                    </ul>
+                </li>
+                <li>Jokes</li>
+                <li>News</li>
+                <li>Take Picture</li>
+                <li>Tell me about [any topic]</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const textInput = document.getElementById('textInput');
+            textInput.addEventListener('keypress', function(event) {
+                if (event.key === 'Enter') {
+                    sendCommand(textInput.value);
+                    textInput.value = '';
+                }
+            });
+        });
+
+        function sendCommand(command) {
+            fetch('/command', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ command: command }),
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                // Optional: Add code to handle successful response
+            })
+            .catch(error => console.error('Error:', error));
+        }
+    </script>
+</body>
+</html>
