@@ -126,6 +126,7 @@ def get_wikipedia_summary(query):
 @app.route('/')
 def index():
     return render_template('index.html')
+    
 
 @app.route('/command', methods=['POST'])
 def execute_command():
